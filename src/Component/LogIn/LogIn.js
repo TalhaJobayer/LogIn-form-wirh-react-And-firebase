@@ -1,38 +1,109 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './LogIn.css'
 import {BsFillArrowRightCircleFill} from 'react-icons/bs'
 import {FcGoogle} from 'react-icons/fc'
 import {AiFillGithub} from 'react-icons/ai'
+import { useNavigate } from "react-router-dom";
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import app from '../../FireBAse.init';
 
 const LogIn = () => {
+	let navigate=useNavigate();
+	    // =========== log in with email,password============
+		const auth = getAuth(app);
+		const [validated, setValidated] = useState(false);
+		const [email, setEmail]=useState('')
+		const [password, setPassword]=useState('')
+		const [name, setName]=useState('')
+		const [submitting, setSubmitting] = useState(false);
+		const handleEmail=(event)=>{
+			setEmail(event.target.value)
+		}
+		const handlePassword=(event)=>{
+			setPassword(event.target.value)
+		}
+		const handleName=(event)=>{
+			setName(event.target.value)
+		}
+		
+	const handlesubmit=()=>{
+		
+		signInWithEmailAndPassword(auth, email, password)
+	  .then((userCredential) => {
+		// Signed in 
+		const user = userCredential.user;
+		console.log(user);
+		// ...
+	  })
+	  .catch((error) => {
+		
+		console.log(error);
+		// ..
+	  });
+	 
+	 
+	}
+	//  ============== On submit====================
+	  const perventLoad=(event)=>{
+		
+		  console.log(email,password);
+		event.preventDefault();
+		setSubmitting(true);
+	
+	   setTimeout(() => {
+		 setSubmitting(false);
+	   }, 3000)
+	  }
+	   
+	// ==============Google Sign in=================
+	
+	const GoogleProvider = new GoogleAuthProvider();
+	
+	
+	 const handleGooglesignUp=()=>{
+		signInWithPopup(auth, GoogleProvider)
+		.then((result) => {
+		  const user = result.user;
+		  console.log(user);
+		  // ...
+		}).catch((error) => {
+		  
+		  console.log(error);
+		});
+	 }
+	 // 
     return (
         <div>
             <div>
             <div className="container">
 	<div className="screen">
 		<div className="screen__content">
-			<form className="login">
+			<form onSubmit={perventLoad} className="login2">
 				
 				<div className="login__field">
 					<i className="login__icon fas fa-user"></i>
-					<input type="email" className="login__input" placeholder="Write your Email"/>
+					<input onBlur={handleEmail} type="email" className="login__input" placeholder="Write your Email" required/>
 				</div>
 				<div className="login__field">
 					<i className="login__icon fas fa-lock"></i>
-					<input type="password" className="login__input" placeholder="Password"/>
+					<input onBlur={handlePassword} type="password" className="login__input" placeholder="Password" required/>
 				</div>
-				<button className="button login__submit">
-					<span className="button__text">Log In Now</span>
+				<button onClick={handlesubmit} className="button login__submit">
+					<span  className="button__text">Log In Now</span>
 					<i className="button__icon fas fa-chevron-right">
                     <BsFillArrowRightCircleFill></BsFillArrowRightCircleFill>
                     
                     </i>
-				</button>				
+				</button>
+				<div>
+                    <small className='navigateLogIN'>Did't have an Account?<span onClick={()=>{navigate('/signUp')}}> Sign Up</span></small>
+                    
+                    </div>				
 			</form>
 			<div className="social-login">
 				<h3>log in via </h3>
 				<div className="social-icons">
-					<FcGoogle></FcGoogle>
+					<FcGoogle onClick={handleGooglesignUp}></FcGoogle>
                     <AiFillGithub></AiFillGithub>
 				</div>
 			</div>

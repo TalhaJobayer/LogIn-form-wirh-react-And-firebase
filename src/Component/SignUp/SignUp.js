@@ -6,13 +6,17 @@ import {AiFillGithub} from 'react-icons/ai'
 import { getAuth, signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import app from '../../FireBAse.init';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 
 
 
 const SignUp = () => {
+    let navigate = useNavigate();
     // =========== log in with email,password============
     const auth = getAuth(app);
+    const [validated, setValidated] = useState(false);
     const [email, setEmail]=useState('')
     const [password, setPassword]=useState('')
     const [name, setName]=useState('')
@@ -28,6 +32,7 @@ const SignUp = () => {
     }
     
 const handlesubmit=()=>{
+    
     createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
@@ -44,6 +49,8 @@ const handlesubmit=()=>{
 }
 //  ============== On submit====================
   const perventLoad=(event)=>{
+   
+   
       console.log(email,password);
     event.preventDefault();
     setSubmitting(true);
@@ -83,15 +90,17 @@ const GoogleProvider = new GoogleAuthProvider();
 			<div className="login" >
 				<div className="login__field">
 					<i className="login__icon fas fa-user"></i>
-					<input onBlur={handleName} type="text" className="login__input" placeholder="Write your name"/>
+					<input onBlur={handleName} type="text" className="login__input" placeholder="Write your name" required/>
 				</div>
 				<div className="login__field">
 					<i className="login__icon fas fa-user"></i>
-					<input onBlur={handleEmail} type="email" className="login__input" placeholder="Write your Email"/>
+					<input onBlur={handleEmail} type="email" className="login__input" placeholder="Write your Email" required/>
+                    
 				</div>
 				<div className="login__field">
 					<i className="login__icon fas fa-lock"></i>
-					<input onBlur={handlePassword} type="password" className="login__input" placeholder="Password"/>
+					<input onBlur={handlePassword} type="password" className="login__input" placeholder="Password" required/>
+                    
 				</div>
 				<button onClick={handlesubmit} className="button login__submit">
 					<span    className="button__text">Sign Up Now</span>
@@ -99,8 +108,13 @@ const GoogleProvider = new GoogleAuthProvider();
                     <BsFillArrowRightCircleFill></BsFillArrowRightCircleFill>
                     
                     </i>
-				</button>				
+				</button>
+                <div>
+                    <small className='navigateLogIN'>Already have an Account?<span onClick={()=>navigate('/logIn')}> Log In</span></small>
+                    
+                    </div>				
 			</div>
+            
 			<div className="social-login">
 				<h3>log in via </h3>
 				<div className="social-icons">
