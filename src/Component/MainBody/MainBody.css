@@ -1,0 +1,30 @@
+.menu{
+     background-color: rgb(255, 255, 255);
+     padding: 15px;
+     display: flex;
+     justify-content: end;
+    
+}
+.menu a{
+    margin-right:20px ;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 700;
+    position: relative;
+}
+.menu a::before{
+position: absolute;
+content: '';
+height: 3px;
+border-radius: 10px;
+width: 84px;
+bottom: -4px;
+background-color: rgb(63, 30, 253);
+opacity: 0;
+transition : 0.25s linear;
+}
+.menu a::before:hover{
+    opacity: 1;
+
+
+}
