@@ -31,24 +31,21 @@ const SignUp = () => {
         setName(event.target.value)
     }
     
-const handlesubmit=()=>{
-    
-    createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user);
-    // ...
-  })
-  .catch((error) => {
-    
-    console.log(error);
-    // ..
-  });
- 
-}
+
 //  ============== On submit====================
   const perventLoad=(event)=>{
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user);
+      // ...
+    })
+    .catch((error) => {
+      
+      console.log(error);
+      // ..
+    });
    
    
       console.log(email,password);
@@ -58,6 +55,8 @@ const handlesubmit=()=>{
    setTimeout(() => {
      setSubmitting(false);
    }, 3000)
+   setEmail('')
+setPassword('')
   }
    
 // ==============Google Sign in=================
@@ -102,7 +101,7 @@ const GoogleProvider = new GoogleAuthProvider();
 					<input onBlur={handlePassword} type="password" className="login__input" placeholder="Password" required/>
                     
 				</div>
-				<button onClick={handlesubmit} className="button login__submit">
+				<button  type="submit" className="button login__submit">
 					<span    className="button__text">Sign Up Now</span>
 					<i className="button__icon fas fa-chevron-right">
                     <BsFillArrowRightCircleFill></BsFillArrowRightCircleFill>

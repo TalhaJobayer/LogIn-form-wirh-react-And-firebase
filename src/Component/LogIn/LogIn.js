@@ -28,31 +28,50 @@ const LogIn = () => {
 		
 	const handlesubmit=()=>{
 		
-		signInWithEmailAndPassword(auth, email, password)
-	  .then((userCredential) => {
-		// Signed in 
-		const user = userCredential.user;
-		console.log(user);
-		// ...
-	  })
-	  .catch((error) => {
 		
-		console.log(error);
-		// ..
-	  });
-	 
 	 
 	}
 	//  ============== On submit====================
+	
 	  const perventLoad=(event)=>{
-		
+		signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+		  // Signed in 
+		  const user = userCredential.user;
+		  console.log(user);
+		  // ...
+		})
+		.catch((error) => {
+		  
+		  console.log(error);
+		  // ..
+		});
+	//    signInWithEmailAndPassword===========end
+
+
+		// this is the way to prevent to go in firebase showed at module 57.5(7.18 min)
+		// ========================================================== 
+		// const form = event.currentTarget;
+		// if (form.checkValidity() === false) {
+		//   event.preventDefault();
+		//   event.stopPropagation();
+		//   return
+		// }
+	
+		// setValidated(true);
+		// and saerch how to do this at react bootsrap/form/validation
+		// ========================================================== 
+
 		  console.log(email,password);
 		event.preventDefault();
+		// loader================================
 		setSubmitting(true);
 	
 	   setTimeout(() => {
 		 setSubmitting(false);
 	   }, 3000)
+	   setEmail('')
+	   setPassword('')
 	  }
 	   
 	// ==============Google Sign in=================
@@ -70,6 +89,7 @@ const LogIn = () => {
 		  
 		  console.log(error);
 		});
+		
 	 }
 	 // 
     return (
@@ -78,7 +98,7 @@ const LogIn = () => {
             <div className="container">
 	<div className="screen">
 		<div className="screen__content">
-			<form onSubmit={perventLoad} className="login2">
+			<form  onSubmit={  perventLoad} className="login2">
 				
 				<div className="login__field">
 					<i className="login__icon fas fa-user"></i>
@@ -88,7 +108,7 @@ const LogIn = () => {
 					<i className="login__icon fas fa-lock"></i>
 					<input onBlur={handlePassword} type="password" className="login__input" placeholder="Password" required/>
 				</div>
-				<button onClick={handlesubmit} className="button login__submit">
+				<button type="submit"  className="button login__submit">
 					<span  className="button__text">Log In Now</span>
 					<i className="button__icon fas fa-chevron-right">
                     <BsFillArrowRightCircleFill></BsFillArrowRightCircleFill>
@@ -96,7 +116,7 @@ const LogIn = () => {
                     </i>
 				</button>
 				<div>
-                    <small className='navigateLogIN'>Did't have an Account?<span onClick={()=>{navigate('/signUp')}}> Sign Up</span></small>
+                    <small className='navigateLogIN'>Did't have an Account?<span onClick={()=>{navigate('/')}}> Sign Up</span></small>
                     
                     </div>				
 			</form>

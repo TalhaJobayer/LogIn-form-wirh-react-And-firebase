@@ -17,14 +17,17 @@ position: absolute;
 content: '';
 height: 3px;
 border-radius: 10px;
-width: 84px;
+width: 0px;
 bottom: -4px;
 background-color: rgb(63, 30, 253);
-opacity: 0;
+
 transition : 0.25s linear;
 }
-.menu a::before:hover{
-    opacity: 1;
+.menu a:hover:before{
+    width: 84px;
 
 
 }
+
+  
+  

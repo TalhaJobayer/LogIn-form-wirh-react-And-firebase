@@ -6,7 +6,7 @@ const MainBody = () => {
     return (
         <div>
             <nav className='menu'>
-               <Link to='/signUp' >Sign UP</Link> 
+               <Link to='/' >Sign UP</Link> 
                <Link to='/logIn' >Log In</Link> 
             </nav>
         </div>
